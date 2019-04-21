@@ -1,8 +1,10 @@
 {
   "dependencies": {
     "axios": "^0.18.0",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
-    "fetch": "^1.1.0"
+    "fetch": "^1.1.0",
+    "socket.io": "^2.2.0"
   },
   "name": "server",
   "version": "1.0.0",
@@ -13,8 +15,8 @@
     "babel-preset-env": "^1.7.0"
   },
   "scripts": {
-    "start1": "nodemon --exec babel-node multiple.js",
-    "start2": "nodemon --exec babel-node plus.js",
-    "start3": "nodemon --exec babel-node relay.js"
+    "startx": "nodemon --exec babel-node multiple.js",
+    "start+": "nodemon --exec babel-node plus.js",
+    "start-": "nodemon --exec babel-node relay.js"
   }
 }

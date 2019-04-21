@@ -11,7 +11,7 @@ export default class OperandCal {
     4,
     5,
     6,
-    "x",
+    "*",
     1,
     2,
     3,
@@ -38,11 +38,10 @@ export default class OperandCal {
     } else if (this.isOperand(inputValue)) {
       return this.appendOperand(inputValue, prevValue);
     } else if (this.isTrigonometricFunction(inputValue)) {
-      console.log(inputValue);
-      console.log(prevValue);
+      if (prevValue === "") return true;
       if (prevValue >= 0 && prevValue <= 9) return false;
-      else return true;
     }
+    return true;
   };
 
   isOperand = inputValue => {
@@ -50,7 +49,7 @@ export default class OperandCal {
       inputValue === "+" ||
       inputValue === "/" ||
       inputValue === "-" ||
-      inputValue === "x" ||
+      inputValue === "*" ||
       inputValue === "^"
     )
       return true;

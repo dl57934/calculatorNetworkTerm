@@ -3,7 +3,11 @@ import app, { startServer } from "./server";
 startServer(3003, "multiple");
 
 app.use("/", (req, res, err) => {
-  res.writeHead("200", { "Content-Type": "text/html;utf-8" });
-  res.write("sanghoon.com");
-  res.end();
+  const {
+    query: { value }
+  } = req;
+  console.log(value);
+  const plusResult = eval(value);
+  console.log(plusResult);
+  // res.send(`${plusResult}`);
 });

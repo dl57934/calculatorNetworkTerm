@@ -1,17 +1,30 @@
 import React, { Component } from "react";
 import styled, { css } from "styled-components";
 import OperandCal from "./OperandCal";
-import axios from "axios";
+import io from "socket.io-client";
+
+const socket = io("http://192.168.43.183:3008");
+
+socket.on("connection", () => {
+  console.log("connect");
+});
 
 class App extends Component {
   state = {
     mathExpression: "",
     result: ""
   };
+
   operandCal = new OperandCal();
 
   render() {
     const { mathExpression } = this.state;
+    socket.on("cal Result", req => {
+      const { result } = req;
+      this.setState({
+        result: result
+      });
+    });
 
     return (
       <Container>
@@ -47,19 +60,15 @@ class App extends Component {
     return document.getElementById("inputArea").focus();
   };
 
-  _singleAction = async input => {
+  _singleAction = input => {
     if (input === "CE") {
       this._initValue();
       return false;
     } else if (input === "=") {
-      const receive = await axios(
-        "https://cors-anywhere.herokuapp.com/http://172.30.11.168:3001",
-        {
-          method: "GET",
-          params: { value: this.state.mathExpression }
-        }
-      );
-      console.log(receive);
+      let { mathExpression } = this.state;
+      mathExpression = mathExpression.replace("^", "**");
+      console.log(mathExpression);
+      socket.emit("request Cal", { mathExpression, type: 0 });
       return false;
     }
     return true;
@@ -82,7 +91,8 @@ class App extends Component {
 
   _initValue = () => {
     this.setState({
-      mathExpression: ""
+      mathExpression: "",
+      result: ""
     });
   };
 
